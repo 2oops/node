@@ -27,5 +27,5 @@ http.createServer((req, res) => {
   // const RESULT = JSON.stringify(DATA)
   // res.end(RESULT)
 }).listen(8000, () => {
-  console.log('listenning on port 8000')
+  console.log('listenning at port: 8000')
 })
