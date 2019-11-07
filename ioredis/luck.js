@@ -1,17 +1,20 @@
+// 引入Redis
+// 这里是要先npm安装的 => npm i ioredis
 const Redis = require('ioredis')
 const redis = new Redis(6379, '127.0.0.1')
 
+// 将日志写入指定文件，也就是抽中券的和没抽中券的请求一个记录
 const fs = require('fs')
 const { Console } = require('console')
 
-const output = fs.createWriteStream('./stdout.log')
-const errorOutput = fs.createWriteStream('./stderr.log')
+const output = fs.createWriteStream('./stdout.log') // 抽中券的到这里来
+const errorOutput = fs.createWriteStream('./stderr.log') // 没抽中券的到这里来
 const logger = new Console(output, errorOutput)
 
 async function luck() {
-  const count = 20
+  const count = 10
   const key = 'counter:luck'
-  const keyExists = await redis.exists(key)
+  const keyExists = await redis.exists(key) // 判断key是否存在
 
   // key不存在则初始化设置
   if(!keyExists) {
@@ -25,6 +28,7 @@ async function luck() {
 
   if(result > count) { //领取超限
     logger.error('luck failure', result)
+
     return
   }
 
